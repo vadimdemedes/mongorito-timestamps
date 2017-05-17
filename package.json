@@ -1,0 +1,26 @@
+{
+  "name": "mongorito-timestamps",
+  "version": "1.0.0",
+  "description": "Created and updated timestamps for Mongorito",
+  "author": "Vadim Demedes <vdemedes@gmail.com>",
+  "license": "MIT",
+  "repository": "vadimdemedes/mongorito-timestamps",
+  "keywords": [
+    "mongorito",
+    "mongorito-plugin"
+  ],
+  "engines": {
+    "node": ">= 6"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "mongorito": "^3.0.1",
+    "xo": "^0.18.2"
+  }
+}
