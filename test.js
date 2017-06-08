@@ -102,3 +102,35 @@ test('custom timestamp values', async t => {
 	t.is(latestCreatedAt, 0);
 	t.is(latestUpdatedAt, 1);
 });
+
+test('work with projection', async t => {
+	const {db} = t.context;
+
+	class Post extends Model {}
+
+	let i = 0;
+	const getTimestamp = () => i++;
+
+	db.use(timestamps({getTimestamp}));
+	db.register(Post);
+
+	let post = new Post({title: 'Hello'});
+	await post.save();
+
+	const createdAt = post.get('created_at');
+	const updatedAt = post.get('updated_at');
+
+	t.is(createdAt, 0);
+	t.is(updatedAt, 0);
+
+	post = await Post.include(['title']).findOne({title: 'Hello'});
+	post.set('content', 'Hello world');
+	await post.save();
+	post = await Post.findById(post.get('_id'))
+
+	const latestCreatedAt = post.get('created_at');
+	const latestUpdatedAt = post.get('updated_at');
+
+	t.is(latestCreatedAt, 0);
+	t.is(latestUpdatedAt, 1);
+});
