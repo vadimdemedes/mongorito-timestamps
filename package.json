@@ -20,6 +20,7 @@
   ],
   "devDependencies": {
     "ava": "^0.19.1",
+    "delay": "^2.0.0",
     "mongorito": "^3.0.1",
     "xo": "^0.18.2"
   }

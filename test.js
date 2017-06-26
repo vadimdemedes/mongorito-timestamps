@@ -1,4 +1,5 @@
 import {Database, Model} from 'mongorito';
+import delay from 'delay';
 import test from 'ava';
 import timestamps from '.';
 
@@ -32,6 +33,7 @@ test('set timestamps', async t => {
 	t.deepEqual(createdAt, updatedAt);
 
 	post.set('title', 'World');
+	await delay(100);
 	await post.save();
 
 	const latestCreatedAt = post.get('created_at');
@@ -67,6 +69,7 @@ test('set timestamps when include/exclude is used', async t => {
 	t.deepEqual(updatedAt, originalUpdatedAt);
 
 	post.set('title', 'World');
+	await delay(100);
 	await post.save();
 
 	const latestCreatedAt = post.get('created_at');
@@ -99,6 +102,7 @@ test('custom field names', async t => {
 	t.deepEqual(createdAt, updatedAt);
 
 	post.set('title', 'World');
+	await delay(100);
 	await post.save();
 
 	const latestCreatedAt = post.get('createdAt');
