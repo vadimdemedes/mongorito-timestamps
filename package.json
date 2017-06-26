@@ -1,6 +1,6 @@
 {
   "name": "mongorito-timestamps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Created and updated timestamps for Mongorito",
   "author": "Vadim Demedes <vdemedes@gmail.com>",
   "license": "MIT",
