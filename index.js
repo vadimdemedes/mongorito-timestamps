@@ -26,6 +26,22 @@ module.exports = (options = {}) => {
 				model.set(updatedAt, timestamp);
 			}
 
+			if (action.type === ActionTypes.QUERY) {
+				const isSelectUsed = action.query
+					.filter(q => q[0] === 'select')
+					.length > 0;
+
+				if (isSelectUsed) {
+					action.query.push([
+						'select',
+						{
+							[createdAt]: 1,
+							[updatedAt]: 1
+						}
+					]);
+				}
+			}
+
 			return next(action);
 		};
 	};

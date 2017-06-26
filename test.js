@@ -41,6 +41,41 @@ test('set timestamps', async t => {
 	t.true(latestUpdatedAt > updatedAt);
 });
 
+test('set timestamps when include/exclude is used', async t => {
+	const {db} = t.context;
+
+	class Post extends Model {}
+
+	db.use(timestamps());
+	db.register(Post);
+
+	let post = new Post({title: 'NYC'});
+	await post.save();
+
+	const originalCreatedAt = post.get('created_at');
+	const originalUpdatedAt = post.get('updated_at');
+
+	post = await Post.include('title').findById(post.get('_id'));
+
+	const createdAt = post.get('created_at');
+	const updatedAt = post.get('updated_at');
+
+	t.true(createdAt instanceof Date);
+	t.true(updatedAt instanceof Date);
+	t.deepEqual(createdAt, updatedAt);
+	t.deepEqual(createdAt, originalCreatedAt);
+	t.deepEqual(updatedAt, originalUpdatedAt);
+
+	post.set('title', 'World');
+	await post.save();
+
+	const latestCreatedAt = post.get('created_at');
+	const latestUpdatedAt = post.get('updated_at');
+
+	t.deepEqual(latestCreatedAt, createdAt);
+	t.true(latestUpdatedAt > updatedAt);
+});
+
 test('custom field names', async t => {
 	const {db} = t.context;
 
